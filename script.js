@@ -55,13 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const deepLinkParam = urlParams.get('link');
 
             if (deepLinkParam) {
-                // Find link by ID
-                const link = linksData.find(l => l.id === deepLinkParam);
-                if (link && link.realUrl) {
-                    console.log('Deep link detected, bouncing...');
-                    // Simulate slight delay for "API" to resolve if it were real
-                    setTimeout(() => performBounce(link.realUrl), 100);
-                }
+                console.log('Deep link detected, fetching secure URL...');
+                fetch(`/.netlify/functions/reveal?id=${deepLinkParam}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.realUrl) {
+                            performBounce(data.realUrl);
+                        }
+                    })
+                    .catch(err => console.error('Deep link fetch error:', err));
             }
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -145,24 +147,28 @@ document.addEventListener('DOMContentLoaded', () => {
     continueBtn.addEventListener('click', () => {
         if (!currentLinkId) return;
 
-        // Simulate API fetch to get the real URL
-        // In reality, this would be: fetch(`/api/getLink?id=${currentLinkId}`)
-        const link = linksData.find(l => l.id === currentLinkId);
+        continueBtn.textContent = 'loading...';
+        continueBtn.disabled = true;
 
-        if (link && link.realUrl) {
-            continueBtn.textContent = 'loading...';
-            continueBtn.disabled = true;
-
-            // Simulate network delay
-            setTimeout(() => {
-                performBounce(link.realUrl);
-
-                // Reset UI (in case user comes back)
+        fetch(`/.netlify/functions/reveal?id=${currentLinkId}`)
+            .then(res => {
+                if (!res.ok) throw new Error('Network response was not ok');
+                return res.json();
+            })
+            .then(data => {
+                if (data.realUrl) {
+                    performBounce(data.realUrl);
+                }
+                // Reset UI
                 continueBtn.textContent = 'Continue (18+)';
                 continueBtn.disabled = false;
                 closeOverlay();
-            }, 800);
-        }
+            })
+            .catch(err => {
+                console.error('Error revealing link:', err);
+                continueBtn.textContent = 'Continue (18+)';
+                continueBtn.disabled = false;
+            });
     });
 
     // Close on click outside
