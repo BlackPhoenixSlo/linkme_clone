@@ -6,7 +6,6 @@ exports.handler = async function (event, context) {
     // In a real app, this would come from a database.
     const secrets = {
         "1": "https://onlyfans.com/juliafilippo",
-        "2": "https://instagram.com/juliafilippo" // Example, usually public links don't need this but we can support it
     };
 
     // 3. Look up the URL
