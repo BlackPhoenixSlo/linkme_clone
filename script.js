@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log(`Loading profile: ${username}`);
 
-    fetch(`api/profiles/${username}.json`)
+    fetch(`/api/profiles/${username}.json`)
         .then(response => {
             if (!response.ok) throw new Error('Profile not found');
             return response.json();
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error fetching profile:', error);
-            window.location.href = 'landing.html';
+            window.location.href = '/landing.html';
         });
 
     function renderProfile(profile) {
