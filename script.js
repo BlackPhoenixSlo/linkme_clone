@@ -40,10 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
-    // Fetch data from "API"
-    // In production this would be /api/profile
-    fetch('api/profile.json')
-        .then(response => response.json())
+    // Routing Logic: Get username from URL path (e.g., domain.com/username)
+    let username = window.location.pathname.replace(/^\/|\/$/g, '');
+    if (!username || username === 'index.html') username = 'juliafilippo_'; // Default
+
+    console.log(`Loading profile: ${username}`);
+
+    fetch(`api/profiles/${username}.json`)
+        .then(response => {
+            if (!response.ok) throw new Error('Profile not found');
+            return response.json();
+        })
         .then(data => {
             renderProfile(data.profile);
             linksData = data.links;
