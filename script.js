@@ -40,9 +40,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
-    // Routing Logic: Get username from URL path (e.g., domain.com/username)
-    let username = window.location.pathname.replace(/^\/|\/$/g, '');
+    // Routing Logic: Get username and optional ID from URL path
+    // Format: /username/id or /username
+    const pathSegments = window.location.pathname.replace(/^\/|\/$/g, '').split('/');
+    let username = pathSegments[0];
+    const trackingId = pathSegments[1]; // The number after the username
+
     if (!username || username === 'index.html') username = 'juliafilippo_'; // Default
+
+    // Store the ID if present
+    if (trackingId) {
+        console.log(`Captured tracking ID: ${trackingId}`);
+        localStorage.setItem('linkme_tracking_id', trackingId);
+    }
 
     console.log(`Loading profile: ${username}`);
 
@@ -56,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             linksData = data.links;
             renderLinks(linksData);
 
-            // Check for Deep Link Query Param
+            // Check for Deep Link Query Param logic (existing)...
             // Example: /?link=1 (where 1 is the link ID)
             const urlParams = new URLSearchParams(window.location.search);
             const deepLinkParam = urlParams.get('link');
@@ -73,7 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     .catch(err => console.error('Deep link fetch error:', err));
             }
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => {
+            console.error('Error fetching profile:', error);
+            window.location.href = 'landing.html';
+        });
 
     function renderProfile(profile) {
         profileContainer.name.textContent = profile.displayName;
