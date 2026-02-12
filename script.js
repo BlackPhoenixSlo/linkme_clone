@@ -73,7 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (deepLinkParam) {
                 console.log('Deep link detected, fetching secure URL...');
-                fetch(`/.netlify/functions/reveal?id=${deepLinkParam}`)
+                let fetchUrl = `/.netlify/functions/reveal?id=${deepLinkParam}`;
+
+                // Get link object to check if tracking is enabled
+                const link = linksData.find(l => l.id === deepLinkParam);
+
+                if (link && link.tracking) {
+                    const storedTrackingId = localStorage.getItem('linkme_tracking_id');
+                    if (storedTrackingId) {
+                        fetchUrl += `&trackingId=${storedTrackingId}`;
+                    }
+                }
+
+                fetch(fetchUrl)
                     .then(res => res.json())
                     .then(data => {
                         if (data.realUrl) {
@@ -170,7 +182,17 @@ document.addEventListener('DOMContentLoaded', () => {
         continueBtn.textContent = 'loading...';
         continueBtn.disabled = true;
 
-        fetch(`/.netlify/functions/reveal?id=${currentLinkId}`)
+        const link = linksData.find(l => l.id === currentLinkId);
+        let fetchUrl = `/.netlify/functions/reveal?id=${currentLinkId}`;
+
+        if (link && link.tracking) {
+            const storedTrackingId = localStorage.getItem('linkme_tracking_id');
+            if (storedTrackingId) {
+                fetchUrl += `&trackingId=${storedTrackingId}`;
+            }
+        }
+
+        fetch(fetchUrl)
             .then(res => {
                 if (!res.ok) throw new Error('Network response was not ok');
                 return res.json();
