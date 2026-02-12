@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     function renderProfile(profile) {
+        document.title = `${profile.displayName} (@${profile.username}) | Linkme`;
         profileContainer.name.textContent = profile.displayName;
         profileContainer.bio.textContent = profile.bio;
         profileContainer.avatar.src = profile.avatarUrl;
