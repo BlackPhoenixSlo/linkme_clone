@@ -289,8 +289,19 @@ h1 {
     background: rgba(0, 0, 0, 0.6);
 }
 
-/* Ensure content is above the overlay */
-.link-card.has-bg-image .link-content,
+/* Ensure content is above the overlay and at the bottom */
+.link-card.has-bg-image .link-content {
+    z-index: 2;
+    position: relative;
+    /* User Requested change: Stop taking full height so justify-content: flex-end works */
+    flex: 0;
+    width: 100%;
+    /* Optional: Center text horizontally if not already */
+    text-align: center;
+    padding-bottom: 5px;
+    /* Fine tune spacing from bottom edge */
+}
+
 .link-card.has-bg-image .link-thumbnail {
     z-index: 2;
     position: relative;
