@@ -259,10 +259,9 @@ h1 {
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
 
-    /* Overlay effect via background-blend-mode or linear-gradient */
-    /* This ensures text is readable on light images */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
-    background-blend-mode: overlay;
+    /* Ensure relative positioning for the pseudo-element overlay */
+    position: relative;
+    overflow: hidden;
 
     transition: all 0.3s ease;
 
@@ -270,16 +269,38 @@ h1 {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
+/* Pseudo-element Overlay */
+.link-card.has-bg-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Default: Light/Transparent overlay (shows image clearly) */
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+/* Hover: Dark overlay (dim image) */
+.link-card.has-bg-image:hover::after {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* Ensure content is above the overlay */
+.link-card.has-bg-image .link-content,
+.link-card.has-bg-image .link-thumbnail {
+    z-index: 2;
+    position: relative;
+}
+
 .link-card.has-bg-image:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    /* Lighten overlay on hover */
-    background-blend-mode: normal;
 }
 
 /* Remove the old img styles since we reverted script.js */
-.link-bg-image,
-.link-card.has-bg-image .link-content,
-.link-card.has-bg-image::after {
+.link-bg-image {
     display: none;
 }
