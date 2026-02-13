@@ -52,6 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (trackingId) {
         console.log(`Captured tracking ID: ${trackingId}`);
         localStorage.setItem('linkme_tracking_id', trackingId);
+
+        // Clean URL: Remove the tracking ID from the address bar
+        // Changes /username/123 -> /username
+        if (username !== 'juliafilippo_') {
+            const cleanUrl = `/${username}`;
+            window.history.replaceState({}, '', cleanUrl);
+        }
     }
 
     console.log(`Loading profile: ${username}`);
