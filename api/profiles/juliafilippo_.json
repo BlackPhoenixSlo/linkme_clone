@@ -13,6 +13,7 @@
       "title": "OnlyFans",
       "url": "",
       "backgroundImage": "/images/face.webp",
+      "icon": "/images/onlyicon.webp",
       "isAdult": true,
       "geo": {
         "default": "10",

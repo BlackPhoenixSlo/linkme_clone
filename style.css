@@ -319,3 +319,14 @@ h1 {
 .link-bg-image {
     display: none;
 }
+/* Top-Left Icon Style */
+.link-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    z-index: 10; /* Above overlay and content */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}

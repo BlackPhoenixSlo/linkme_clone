@@ -164,6 +164,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             }
 
+            // Top-left Icon (User Request)
+            if (link.icon) {
+                const icon = document.createElement('img');
+                icon.src = link.icon;
+                icon.className = 'link-icon';
+                card.appendChild(icon);
+            }
+
             content.appendChild(title);
             content.appendChild(subtitle);
             card.appendChild(content);
