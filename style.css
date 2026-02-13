@@ -247,13 +247,14 @@ h1 {
 
 /* CSS for Link Background Images (Banners) */
 .link-card.has-bg-image {
+    box-sizing: border-box;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     /* Fallback aspect ratio (2.5:1) until JS loads the image */
     aspect-ratio: 2.5 / 1;
-    width: 100%;
+    /* width: 100% removed to match other cards */
 
     display: flex;
     flex-direction: column;
@@ -262,6 +263,8 @@ h1 {
 
     /* Overlay effect: NONE by default (clear image) */
     background-image: none;
+    /* Ensure no dark background bleeds through */
+    background-color: transparent;
     background-blend-mode: normal;
 
     transition: all 0.3s ease;
