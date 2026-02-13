@@ -246,12 +246,12 @@ h1 {
 }
 
 /* CSS for Link Background Images (Banners) */
-.link-btn.has-bg-image {
+.link-card.has-bg-image {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
-    /* Force a banner shape (e.g. 2.5:1 ratio) */
+    /* Fallback aspect ratio (2.5:1) until JS loads the image */
     aspect-ratio: 2.5 / 1;
     width: 100%;
 
@@ -271,7 +271,7 @@ h1 {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
-.link-btn.has-bg-image:hover {
+.link-card.has-bg-image:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     /* Lighten overlay on hover */
@@ -280,7 +280,7 @@ h1 {
 
 /* Remove the old img styles since we reverted script.js */
 .link-bg-image,
-.link-btn.has-bg-image .link-content,
-.link-btn.has-bg-image::after {
+.link-card.has-bg-image .link-content,
+.link-card.has-bg-image::after {
     display: none;
 }
