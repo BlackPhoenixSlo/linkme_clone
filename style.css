@@ -259,6 +259,8 @@ h1 {
     /* User request: Move text to the bottom */
     justify-content: flex-end;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Remove default card padding so overlay hits the edges */
+    padding: 0;
 
     /* Ensure relative positioning for the pseudo-element overlay */
     position: relative;
@@ -298,8 +300,8 @@ h1 {
     width: 100%;
     /* Optional: Center text horizontally if not already */
     text-align: center;
-    padding-bottom: 5px;
-    /* Fine tune spacing from bottom edge */
+    /* Add padding back since we removed it from the card */
+    padding: 15px;
 }
 
 .link-card.has-bg-image .link-thumbnail {
