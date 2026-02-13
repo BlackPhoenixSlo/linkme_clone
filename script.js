@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (deepLinkParam) {
                 console.log('Deep link detected, fetching secure URL...');
-                let fetchUrl = `/.netlify/functions/reveal?id=${deepLinkParam}`;
+                let fetchUrl = `/.netlify/functions/reveal?id=${deepLinkParam}&user=${username}`;
 
                 // Get link object to check if tracking is enabled
                 const link = linksData.find(l => l.id === deepLinkParam);
@@ -184,7 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
         continueBtn.disabled = true;
 
         const link = linksData.find(l => l.id === currentLinkId);
-        let fetchUrl = `/.netlify/functions/reveal?id=${currentLinkId}`;
+        // Pass username here too
+        let fetchUrl = `/.netlify/functions/reveal?id=${currentLinkId}&user=${username}`;
 
         if (link && link.tracking) {
             const storedTrackingId = localStorage.getItem('linkme_tracking_id');

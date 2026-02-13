@@ -1,22 +1,40 @@
 exports.handler = async function (event, context) {
     // 1. Get the Link ID and optional Tracking ID from the query parameters
-    const { id, trackingId } = event.queryStringParameters;
+    let { id, trackingId, user } = event.queryStringParameters;
+    const { getGeoTrackingId } = require('./geo_utils');
 
     // 2. Load secrets from external JSON file
-    // This allows n8n updates via Git without modifying code logic.
     const secrets = require('./secrets.json');
 
     // 3. Look up the URL
     let realUrl = secrets[id];
 
-    // 4. Append Tracking ID if present (e.g. for OnlyFans)
-    // Converts: https://onlyfans.com/juliafilippo -> https://onlyfans.com/juliafilippo/c123
+    // 4. Handle Tracking ID Logic
     if (realUrl && trackingId) {
-        // Remove trailing slash if present to avoid double slashes
-        if (realUrl.endsWith('/')) {
-            realUrl = realUrl.slice(0, -1);
+        // CASE A: Geo-Targeting
+        if (trackingId === 'geo' && user) {
+            console.log(`Geo-targeting requested for user: ${user}`);
+            const geoId = getGeoTrackingId(user, id, event.headers);
+            if (geoId) {
+                trackingId = geoId;
+            } else {
+                trackingId = null; // Fallback to no tracking if no rule matches
+            }
         }
-        realUrl += `/c${trackingId}`;
+        // CASE B: Numeric Validation (Security/Cleanliness)
+        else if (!/^\d+$/.test(trackingId)) {
+            // If it's not "geo" and not a pure number, ignore it.
+            trackingId = null;
+        }
+
+        // Apply Valid Tracking ID
+        if (trackingId) {
+            // Remove trailing slash if present to avoid double slashes
+            if (realUrl.endsWith('/')) {
+                realUrl = realUrl.slice(0, -1);
+            }
+            realUrl += `/c${trackingId}`;
+        }
     }
 
     // 5. Return the result
