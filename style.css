@@ -260,22 +260,23 @@ h1 {
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
 
-    /* Overlay effect via background-blend-mode or linear-gradient */
-    /* This ensures text is readable on light images */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
-    background-blend-mode: overlay;
+    /* Overlay effect: NONE by default (clear image) */
+    background-image: none;
+    background-blend-mode: normal;
 
     transition: all 0.3s ease;
 
-    /* Text Shadow for readability */
+    /* Text Shadow for readability even without overlay */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .link-card.has-bg-image:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    /* Lighten overlay on hover */
-    background-blend-mode: normal;
+
+    /* Add dark overlay on hover */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+    background-blend-mode: overlay;
 }
 
 /* Remove the old img styles since we reverted script.js */

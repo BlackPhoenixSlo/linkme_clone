@@ -153,15 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (link.backgroundImage) {
                 card.style.backgroundImage = `url('${link.backgroundImage}')`;
                 card.classList.add('has-bg-image');
-
-                // User Request: Make container height match the image aspect ratio exactly
-                const img = new Image();
-                img.src = link.backgroundImage;
-                img.onload = function () {
-                    const ratio = img.naturalWidth / img.naturalHeight;
-                    // Apply aspect ratio to the card so it fits the image perfectly
-                    card.style.aspectRatio = `${ratio} / 1`;
-                };
             }
 
             content.appendChild(title);
