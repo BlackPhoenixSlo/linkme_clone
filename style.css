@@ -319,14 +319,22 @@ h1 {
 .link-bg-image {
     display: none;
 }
+
 /* Top-Left Icon Style */
 .link-icon {
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 24px;
-    height: 24px;
+    /* User request: Make icon tiny larger (24 -> 32px) */
+    width: 32px;
+    height: 32px;
     object-fit: contain;
-    z-index: 10; /* Above overlay and content */
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    z-index: 10;
+
+    /* User request: "strange color" fix -> Add white background badge style */
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 4px;
+    /* Padding inside the white circle */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }

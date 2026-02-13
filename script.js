@@ -165,7 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Top-left Icon (User Request)
-            if (link.icon) {
+            // Only add icon if there is a background image (Banner)
+            if (link.icon && link.backgroundImage) {
                 const icon = document.createElement('img');
                 icon.src = link.icon;
                 icon.className = 'link-icon';
