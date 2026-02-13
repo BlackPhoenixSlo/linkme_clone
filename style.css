@@ -247,39 +247,34 @@ h1 {
 
 /* CSS for Link Background Images (Banners) */
 .link-card.has-bg-image {
-    box-sizing: border-box;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     /* Fallback aspect ratio (2.5:1) until JS loads the image */
     aspect-ratio: 2.5 / 1;
-    /* width: 100% removed to match other cards */
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
 
-    /* Overlay effect: NONE by default (clear image) */
-    background-image: none;
-    /* Ensure no dark background bleeds through */
-    background-color: transparent;
-    background-blend-mode: normal;
+    /* Overlay effect via background-blend-mode or linear-gradient */
+    /* This ensures text is readable on light images */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+    background-blend-mode: overlay;
 
     transition: all 0.3s ease;
 
-    /* Text Shadow for readability even without overlay */
+    /* Text Shadow for readability */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .link-card.has-bg-image:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-
-    /* Add dark overlay on hover */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-    background-blend-mode: overlay;
+    /* Lighten overlay on hover */
+    background-blend-mode: normal;
 }
 
 /* Remove the old img styles since we reverted script.js */
