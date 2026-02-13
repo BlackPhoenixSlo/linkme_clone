@@ -247,61 +247,40 @@ h1 {
 
 /* CSS for Link Background Images (Banners) */
 .link-btn.has-bg-image {
-    padding: 0;
-    /* Remove padding so image hits edges */
-    overflow: hidden;
-    /* Clip image corners */
-    min-height: 100px;
-    /* Minimum height for banners */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Force a banner shape (e.g. 2.5:1 ratio) */
+    aspect-ratio: 2.5 / 1;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    /* No background-image here anymore */
-    background-color: transparent;
+
+    /* Overlay effect via background-blend-mode or linear-gradient */
+    /* This ensures text is readable on light images */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+    background-blend-mode: overlay;
+
     transition: all 0.3s ease;
-}
 
-.link-bg-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    /* This ensures the image drives the height aka "resize to be width full" */
-    object-fit: cover;
-}
-
-/* Overlay the text content on top of the image */
-.link-btn.has-bg-image .link-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    z-index: 2;
-    /* Ensure text is readable */
+    /* Text Shadow for readability */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
-}
-
-/* Optional: Add a dark overlay on the image itself or via pseudo-element */
-.link-btn.has-bg-image::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    /* Darkens the image */
-    z-index: 1;
-    transition: background 0.3s ease;
-}
-
-.link-btn.has-bg-image:hover::after {
-    background: rgba(0, 0, 0, 0.2);
-    /* Lighten on hover */
 }
 
 .link-btn.has-bg-image:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    /* Lighten overlay on hover */
+    background-blend-mode: normal;
+}
+
+/* Remove the old img styles since we reverted script.js */
+.link-bg-image,
+.link-btn.has-bg-image .link-content,
+.link-btn.has-bg-image::after {
+    display: none;
 }
